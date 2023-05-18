@@ -51,119 +51,121 @@ class _PerSState extends State<PerS> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Welcome!",
-                          style: TextStyle(
-                              color: primary, fontSize: 60, fontFamily: 'Markbold'),
-                        ),
-                        Text(
-                          "$nw",
-                          style: TextStyle(
-                              color: primary, fontSize: 60, fontFamily: 'Markbold'),
-                        ),
-                      ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Welcome!",
+                            style: TextStyle(
+                                color: primary, fontSize: 60, fontFamily: 'Markbold'),
+                          ),
+                          Text(
+                            "$nw",
+                            style: TextStyle(
+                                color: primary, fontSize: 60, fontFamily: 'Markbold'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    await supabase.auth.signOut();
-                  },
-                  icon: Icon(Icons.logout),
-                  color: primary,
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Container(
-                height: 600,
-                decoration: BoxDecoration(
-                    color: primary, borderRadius: BorderRadius.circular(20)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Certificates Recieved",
-                            style: TextStyle(
-                                color: third, fontSize: 20, fontFamily: 'Markbold'),
+                  IconButton(
+                    onPressed: () async {
+                      await supabase.auth.signOut();
+                    },
+                    icon: Icon(Icons.logout),
+                    color: primary,
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: Container(
+                  height: 600,
+                  decoration: BoxDecoration(
+                      color: primary, borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              "Certificates Recieved",
+                              style: TextStyle(
+                                  color: third, fontSize: 20, fontFamily: 'Markbold'),
+                            ),
                           ),
-                        ),
-                        IconButton(onPressed:(){setState(() {
+                          IconButton(onPressed:(){setState(() {
 
-                        });} , icon: Icon(Icons.refresh_outlined),color: third,)
-                      ],
-                    ),
-                    FutureBuilder(future: certData(),builder: (BuildContext context, AsyncSnapshot snapshot){
-                      if(snapshot.hasError)
-                      {
-                        return Center(child: Text(snapshot.error.toString()));
-                      }
-
-                      if(snapshot.hasData)
-                      {
-                        if(snapshot.data.length== 0)
+                          });} , icon: Icon(Icons.refresh_outlined),color: third,)
+                        ],
+                      ),
+                      FutureBuilder(future: certData(),builder: (BuildContext context, AsyncSnapshot snapshot){
+                        if(snapshot.hasError)
                         {
-                          return Center(child: Text("Empty"),);
-
+                          return Center(child: Text(snapshot.error.toString()));
                         }
-                        return ListView.builder(scrollDirection: Axis.vertical,
-                            shrinkWrap: true,itemCount: snapshot.data.length,itemBuilder: (context, int index){
-                              var stuff = snapshot.data[index];
-                              var namee=stuff['certname'];
+
+                        if(snapshot.hasData)
+                        {
+                          if(snapshot.data.length== 0)
+                          {
+                            return Center(child: Text("Empty"),);
+
+                          }
+                          return ListView.builder(scrollDirection: Axis.vertical,
+                              shrinkWrap: true,itemCount: snapshot.data.length,itemBuilder: (context, int index){
+                                var stuff = snapshot.data[index];
+                                var namee=stuff['certname'];
 
 
-                              var timee = stuff['created_at'];
-                              var orgg = stuff['orgname'];
+                                var timee = stuff['created_at'];
+                                var orgg = stuff['orgname'];
 
 
 
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container( decoration: BoxDecoration(
-                                    color: secondary, borderRadius: BorderRadius.circular(20)),
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container( decoration: BoxDecoration(
+                                      color: secondary, borderRadius: BorderRadius.circular(20)),
 
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ListTile(
-                                      title:Text("$namee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
-                                      subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("$orgg",style: TextStyle(color: primary),textAlign: TextAlign.start,),Text("$timee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
-                                        ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        title:Text("$namee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
+                                        subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("$orgg",style: TextStyle(color: primary),textAlign: TextAlign.start,),Text("$timee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
+                                          ],
+                                        ),
+
+                                        trailing: IconButton(icon: Icon(Icons.download,color: primary,),onPressed:(){},),
                                       ),
-
-                                      trailing: IconButton(icon: Icon(Icons.download,color: primary,),onPressed:(){},),
                                     ),
                                   ),
-                                ),
-                              );
+                                );
 
-                            });
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    },)
-                  ],
+                              });
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      },)
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supaverify/screens/login_S.dart';
 import 'package:supaverify/screens/per_S.dart';
+import 'package:supaverify/screens/ver_S.dart';
 
 import 'org_S.dart';
 
@@ -36,20 +38,27 @@ class _NavigateSState extends State<NavigateS> {
       body: FutureBuilder(
           future: certData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              var stuff = snapshot.data[0];
-              print("applee");
-              print(stuff);
-              var orga = stuff['isorg'];
-              var pers = stuff['isper'];
-              var veri = stuff['isver'];
-              if (orga)
-                return orgS();
-              else if (pers) return PerS();
-              return orgS();
-            } else
-              return Center(child: CircularProgressIndicator());
-          }),
+
+                if (snapshot.hasData) {
+                  var stuff = snapshot.data[0];
+                  print("applee");
+                  print(stuff);
+                  var orga = stuff['isorg'];
+                  var pers = stuff['isper'];
+                  var veri = stuff['isver'];
+                  if (orga)
+                    return orgS();
+                  else if (pers) return PerS();
+                  else if(veri) return ver_S();
+                  return Center(child: CircularProgressIndicator());
+
+
+                } else
+                  return Center(child: CircularProgressIndicator());
+
+
+            }
+          ),
     );
   }
 }

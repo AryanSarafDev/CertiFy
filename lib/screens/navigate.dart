@@ -36,24 +36,20 @@ class _NavigateSState extends State<NavigateS> {
       body: FutureBuilder(
           future: certData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-
-                if (snapshot.hasData) {
-                  var stuff = snapshot.data[0];
-                  print("applee");
-                  print(stuff);
-                  var orga = stuff['isorg'];
-                  var pers = stuff['isper'];
-                  var veri = stuff['isver'];
-                  if (orga)
-                    return orgS();
-                  else if (pers) return PerS();
-                  return orgS();
-                } else
-                  return Center(child: CircularProgressIndicator());
-
-
-            }
-          ),
+            if (snapshot.hasData) {
+              var stuff = snapshot.data[0];
+              print("applee");
+              print(stuff);
+              var orga = stuff['isorg'];
+              var pers = stuff['isper'];
+              var veri = stuff['isver'];
+              if (orga)
+                return orgS();
+              else if (pers) return PerS();
+              return orgS();
+            } else
+              return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

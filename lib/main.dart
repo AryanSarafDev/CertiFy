@@ -89,6 +89,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     if (_user == null)
       return loginS();
-    else return NavigateS();
+    else
+      return NavigateS();
   }
 }

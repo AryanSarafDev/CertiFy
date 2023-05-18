@@ -94,7 +94,6 @@ class _loginSState extends State<loginS> {
                                     await supabase.auth.signInWithPassword(
                                         password: _passc.text,
                                         email: _emailc.text);
-
                                   } catch (e) {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
@@ -127,11 +126,13 @@ class _loginSState extends State<loginS> {
                     style: TextStyle(color: fourthdull),
                   ),
                   InkWell(
-                    child: Text(
-                      "Sign-Up!",
-                      style: TextStyle(color: primary),
-                    ),onTap:()async{await Get.to(registerS());}
-                  )
+                      child: Text(
+                        "Sign-Up!",
+                        style: TextStyle(color: primary),
+                      ),
+                      onTap: () async {
+                        await Get.to(registerS());
+                      })
                 ]),
           )
         ],

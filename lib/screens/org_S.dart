@@ -21,14 +21,12 @@ class _orgSState extends State<orgS> {
   TextEditingController _emailc = new TextEditingController();
   TextEditingController _nac = new TextEditingController();
 
-
   @override
   void initState() {
     _name();
     certData();
     super.initState();
   }
-
 
   late File filess;
 
@@ -38,14 +36,12 @@ class _orgSState extends State<orgS> {
   bool view = false;
   String nw = "";
 
-
   Future<List> certData() async {
     final _nu = await supabase.auth.currentUser!.id;
     final certd =
         await supabase.from('organization').select('*').textSearch('oid', _nu);
     print(certd);
     return certd;
-
   }
 
   void _name() async {
@@ -57,12 +53,11 @@ class _orgSState extends State<orgS> {
         .textSearch('oid', nu);
 
     setState(() async {
-      nw = await nv[0]['username'];  setState(() {});
-
-
+      nw = await nv[0]['username'];
+      setState(() {});
     });
-
   }
+
   @override
   void dispose() {
     supabase.dispose;
@@ -71,7 +66,6 @@ class _orgSState extends State<orgS> {
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +259,7 @@ class _orgSState extends State<orgS> {
                                       'certificate': uploadUrl,
                                       'email': _emailc.text,
                                       'certname': _nac.text,
-                                      'orgname' : nw
+                                      'orgname': nw
                                     });
                                   } catch (e) {
                                     ScaffoldMessenger.of(context)
@@ -307,60 +301,91 @@ class _orgSState extends State<orgS> {
                           child: Text(
                             "Certificates Issued",
                             style: TextStyle(
-                                color: third, fontSize: 20, fontFamily: 'Markbold'),
+                                color: third,
+                                fontSize: 20,
+                                fontFamily: 'Markbold'),
                           ),
                         ),
-                        IconButton(onPressed:(){setState(() {
-                          
-                        });} , icon: Icon(Icons.refresh_outlined),color: third,)
+                        IconButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          icon: Icon(Icons.refresh_outlined),
+                          color: third,
+                        )
                       ],
                     ),
-                    FutureBuilder(future: certData(),builder: (BuildContext context, AsyncSnapshot snapshot){
-                      if(snapshot.hasError)
-                        {
+                    FutureBuilder(
+                      future: certData(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasError) {
                           return Center(child: Text(snapshot.error.toString()));
                         }
 
-                      if(snapshot.hasData)
-                        {
-                          if(snapshot.data.length== 0)
-                            {
-                              return Center(child: Text("Empty"),);
-
-                            }
-                          return ListView.builder(scrollDirection: Axis.vertical,
-                              shrinkWrap: true,itemCount: snapshot.data.length,itemBuilder: (context, int index){
-                            var stuff = snapshot.data[index];
-                            var namee=stuff['certname'];
-
-                            var emaill= stuff['email'];
-                            var timee = stuff['created_at'];
-                            print("$index) ");
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container( decoration: BoxDecoration(
-                                  color: secondary, borderRadius: BorderRadius.circular(20)),
-
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListTile(
-                                    title:Text("$namee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
-                                    subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("$emaill",style: TextStyle(color: primary),textAlign: TextAlign.start,),Text("$timee",style: TextStyle(color: primary),textAlign: TextAlign.start,),
-                                      ],
-                                    ),
-
-                                    trailing: IconButton(icon: Icon(Icons.download,color: primary,),onPressed:(){},),
-                                  ),
-                                ),
-                              ),
+                        if (snapshot.hasData) {
+                          if (snapshot.data.length == 0) {
+                            return Center(
+                              child: Text("Empty"),
                             );
+                          }
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, int index) {
+                                var stuff = snapshot.data[index];
+                                var namee = stuff['certname'];
 
-                          });
+                                var emaill = stuff['email'];
+                                var timee = stuff['created_at'];
+                                print("$index) ");
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: secondary,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ListTile(
+                                        title: Text(
+                                          "$namee",
+                                          style: TextStyle(color: primary),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "$emaill",
+                                              style: TextStyle(color: primary),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                            Text(
+                                              "$timee",
+                                              style: TextStyle(color: primary),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
+                                        ),
+                                        trailing: IconButton(
+                                          icon: Icon(
+                                            Icons.download,
+                                            color: primary,
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
                         }
-                      return Center(child: CircularProgressIndicator());
-                    },)
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    )
                   ],
                 ),
               ),

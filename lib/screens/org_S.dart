@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+
 import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supaverify/utils/downloader.dart';
 
 import '../utils/constants.dart';
 import '../utils/textbox.dart';
@@ -100,7 +103,8 @@ class _orgSState extends State<orgS> {
                       ),
                     ],
                   ),
-                ),Spacer(),
+                ),
+                Spacer(),
                 IconButton(
                   onPressed: () async {
                     await supabase.auth.signOut();
@@ -243,7 +247,7 @@ class _orgSState extends State<orgS> {
                                             "${supabase.auth.currentUser!.id}/$fn",
                                             filess);
                                     final uploadUrl = supabase.storage
-                                        .from('pdfs')
+                                        .from('')
                                         .getPublicUrl(upload);
                                     String userid =
                                         await supabase.auth.currentUser!.id;
@@ -328,60 +332,64 @@ class _orgSState extends State<orgS> {
                               child: Text("Empty"),
                             );
                           }
-                          return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, int index) {
-                                var stuff = snapshot.data[index];
-                                var namee = stuff['certname'];
-
-                                var emaill = stuff['email'];
-                                var timee = stuff['created_at'];
-                                print("$index) ");
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: secondary,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ListTile(
-                                        title: Text(
-                                          "$namee",
-                                          style: TextStyle(color: primary),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "$emaill",
-                                              style: TextStyle(color: primary),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                            Text(
-                                              "$timee",
-                                              style: TextStyle(color: primary),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
-                                        trailing: IconButton(
-                                          icon: Icon(
-                                            Icons.download,
-                                            color: primary,
+                          return Expanded(
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, int index) {
+                                  var stuff = snapshot.data[index];
+                                  var namee = stuff['certname'];
+                                  var link = stuff['certificate'].toString();
+                                  var emaill = stuff['email'];
+                                  var timee = stuff['created_at'];
+                                  print("$index) ");
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: secondary,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          title: Text(
+                                            "$namee",
+                                            style: TextStyle(color: primary),
+                                            textAlign: TextAlign.start,
                                           ),
-                                          onPressed: () {},
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "$emaill",
+                                                style: TextStyle(color: primary),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              Text(
+                                                "$timee",
+                                                style: TextStyle(color: primary),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: IconButton(
+                                            icon: Icon(
+                                              Icons.download,
+                                              color: primary,
+                                            ),
+                                            onPressed: () {
+                                              Downloader().download(namee, link);
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              });
+                                  );
+                                }),
+                          );
                         }
                         return Center(child: CircularProgressIndicator());
                       },

@@ -7,21 +7,26 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:permission_handler/permission_handler.dart';
  class Downloader{
+
   //file download function
 
+
 void download(String name, String url) async {
+
   Map<Permission, PermissionStatus> statuses = await [
     Permission.storage,
 
+    //add more permission to request here.
   ].request();
-
   if(statuses[Permission.storage]!.isGranted){
+
+
     Directory root = await getTemporaryDirectory();
 
-    var path = root.path + '/docs';;
+    String savename = "file.pdf";
+    String savePath =  "/storage/emulated/0/Download"+ "/$name.pdf ";
 
 
-    var savePath = path ;
     print(savePath);
     print(url);
 
@@ -43,6 +48,7 @@ void download(String name, String url) async {
   }else{
     print("No permission to read and write.");
   }
+
 
 }
 

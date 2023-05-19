@@ -15,11 +15,8 @@ import 'package:supaverify/utils/constants.dart';
 String bools = "";
 
 void main() async {
-  final DropCont boolcont = Get.put(DropCont());
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
-  String supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
-  String supabaseKey = dotenv.env['SUPABASE_KEY'] ?? '';
+  //Initialize Supabase
   await Supabase.initialize(
       url: 'https://wbluqmcdevbqplwlbrop.supabase.co',
       anonKey:
@@ -30,7 +27,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -48,6 +44,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// class for route management
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
 
@@ -56,10 +53,10 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  final DropCont boolcont = Get.put(DropCont());
   final SupabaseClient supabase = Supabase.instance.client;
   User? _user;
   String? idd;
+  // variables for checking type of user
   var orga = false;
   var pers = false;
   var veri = false;
@@ -70,7 +67,6 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     _getAuth();
-
     super.initState();
   }
 

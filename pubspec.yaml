@@ -40,6 +40,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   file_picker: ^5.3.0
   path_provider: ^2.0.15
+  flowder: ^0.2.0
 
 dev_dependencies:
   flutter_test:

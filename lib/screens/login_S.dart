@@ -16,7 +16,7 @@ class loginS extends StatefulWidget {
 }
 
 class _loginSState extends State<loginS> {
-  final DropCont boolcont = Get.put(DropCont());
+
   TextEditingController _emailc = new TextEditingController();
 
   TextEditingController _passc = new TextEditingController();
@@ -41,6 +41,7 @@ class _loginSState extends State<loginS> {
         children: [
           Spacer(),
           Stack(children: [
+            //Stack 1: Container for background card
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -49,6 +50,7 @@ class _loginSState extends State<loginS> {
                     color: primary, borderRadius: BorderRadius.circular(20)),
               ),
             ),
+            //Stack 2: Container for background card
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
@@ -61,6 +63,8 @@ class _loginSState extends State<loginS> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      //Custom text field class
+                      //email field
                       Padding(
                         padding: const EdgeInsetsDirectional.symmetric(
                             vertical: 8.0),
@@ -69,6 +73,7 @@ class _loginSState extends State<loginS> {
                             hintText: "Enter email",
                             textInputType: TextInputType.emailAddress),
                       ),
+                      //password field
                       Padding(
                         padding: const EdgeInsetsDirectional.symmetric(
                             vertical: 8.0),
@@ -79,6 +84,7 @@ class _loginSState extends State<loginS> {
                           isPass: true,
                         ),
                       ),
+                      //Login Button
                       Padding(
                         padding: const EdgeInsetsDirectional.symmetric(
                             horizontal: 70, vertical: 8),
@@ -116,7 +122,7 @@ class _loginSState extends State<loginS> {
           ]),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 16),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

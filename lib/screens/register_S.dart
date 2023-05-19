@@ -5,7 +5,6 @@ import 'package:supaverify/controllers/dropController.dart';
 
 import '../utils/constants.dart';
 import '../utils/textbox.dart';
-
 List<String> list = <String>[
   'Personal',
   'Organization',
@@ -18,7 +17,7 @@ class registerS extends StatefulWidget {
 }
 
 class _registerSState extends State<registerS> {
-  final DropCont boolcont = Get.put(DropCont());
+
   TextEditingController _emailc = new TextEditingController();
   TextEditingController _namec = new TextEditingController();
   TextEditingController _passc = new TextEditingController();
@@ -49,6 +48,7 @@ class _registerSState extends State<registerS> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Stack(children: [
+            //Stack 1: Container for background card
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -57,10 +57,11 @@ class _registerSState extends State<registerS> {
                     color: primary, borderRadius: BorderRadius.circular(20)),
               ),
             ),
+            //Stack 2: Container for background card
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.0,
                 decoration: BoxDecoration(
                     color: secondary, borderRadius: BorderRadius.circular(20)),
                 child: Padding(
@@ -142,7 +143,7 @@ class _registerSState extends State<registerS> {
                       ),
                       Padding(
                         padding: const EdgeInsetsDirectional.symmetric(
-                            horizontal: 70, vertical: 20),
+                            horizontal: 70, vertical: 16),
                         child: SizedBox(
                             height: 50,
                             child: ElevatedButton(

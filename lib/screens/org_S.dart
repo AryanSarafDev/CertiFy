@@ -85,22 +85,22 @@ class _orgSState extends State<orgS> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Welcome!",
+                        "Welcome",
                         style: TextStyle(
                             color: primary,
-                            fontSize: 60,
+                            fontSize: 50,
                             fontFamily: 'Markbold'),
                       ),
                       Text(
-                        "$nw",
+                        "$nw!",
                         style: TextStyle(
                             color: primary,
-                            fontSize: 60,
+                            fontSize: 30,
                             fontFamily: 'Markbold'),
                       ),
                     ],
                   ),
-                ),
+                ),Spacer(),
                 IconButton(
                   onPressed: () async {
                     await supabase.auth.signOut();

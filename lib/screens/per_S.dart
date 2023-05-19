@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/constants.dart';
+import '../utils/downloader.dart';
 
 class PerS extends StatefulWidget {
   const PerS({Key? key}) : super(key: key);
@@ -144,7 +145,7 @@ class _PerSState extends State<PerS> {
                                 itemBuilder: (context, int index) {
                                   var stuff = snapshot.data[index];
                                   var namee = stuff['certname'];
-
+                                  var link = stuff['certificate'].toString();
                                   var timee = stuff['created_at'];
                                   var orgg = stuff['orgname'];
 
@@ -186,7 +187,7 @@ class _PerSState extends State<PerS> {
                                               Icons.download,
                                               color: primary,
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {Downloader().download(namee, link);},
                                           ),
                                         ),
                                       ),

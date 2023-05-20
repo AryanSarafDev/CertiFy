@@ -17,6 +17,7 @@ class CertificateVerificationController {
   late ContractFunction _revokeCertificate;
   late ContractFunction _verifyCertificate;
   late ContractFunction _getCertificates;
+  late ContractFunction _owner;
 
   CertificateVerificationController() {}
 
@@ -32,14 +33,16 @@ class CertificateVerificationController {
     await getCredentials();
     await getDeployedContract();
     cid = await _web3client.getChainId();
+
+    print("ls: ${await owner()}");
   }
 
   final String _privatekey =
-      '0x4199ffbfba66aad9454cc6daf39bfcb0ee79e64fa943fb4da838b1cc5b6dfdee';
+      '0x2706143bea7f0439b66e99eadbd884569b7352b8adc3b10ee2c1ad4dcde8000f';
 
   Future<void> getABI() async {
-    String abiFile = await rootBundle
-        .loadString('contracts/build/contracts/CertificateVerification.json');
+    String abiFile = await rootBundle.loadString(
+        'lib/contracts/build/contracts/CertificateVerification.json');
     var jsonABI = jsonDecode(abiFile);
     _abiCode = ContractAbi.fromJson(
         jsonEncode(jsonABI['abi']), 'CertificateVerification');
@@ -53,10 +56,11 @@ class CertificateVerificationController {
 
   Future<void> getDeployedContract() async {
     _deployedContract = DeployedContract(_abiCode, _contractAddress);
-    _addCertificate = _deployedContract.function('addVertificate');
+    _addCertificate = _deployedContract.function('addCertificate');
     _getCertificates = _deployedContract.function('getCertificates');
     _revokeCertificate = _deployedContract.function('revokeCertificate');
     _verifyCertificate = _deployedContract.function('verifyCertificate');
+    _owner = _deployedContract.function('owner');
   }
 
   addCertificate(String studentHash, String orgHash, String certHash) async {
@@ -101,5 +105,11 @@ class CertificateVerificationController {
           parameters: [studentHash, orgHash, certHash],
         ),
         chainId: cid.toInt());
+  }
+
+  owner() async {
+    List owner = await _web3client
+        .call(contract: _deployedContract, function: _owner, params: []);
+    return owner[0];
   }
 }

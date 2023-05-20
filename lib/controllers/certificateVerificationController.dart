@@ -86,14 +86,11 @@ class CertificateVerificationController {
   }
 
   verifyCertificate(String studentHash, String orgHash, String certHash) async {
-    await _web3client.sendTransaction(
-        _creds,
-        Transaction.callContract(
-          contract: _deployedContract,
-          function: _verifyCertificate,
-          parameters: [studentHash, orgHash, certHash],
-        ),
-        chainId: cid.toInt());
+    List cert = await _web3client.call(
+        contract: _deployedContract,
+        function: _verifyCertificate,
+        params: [studentHash, orgHash, certHash]);
+    return cert[0];
   }
 
   getCertificates(String studentHash, String orgHash, String certHash) async {

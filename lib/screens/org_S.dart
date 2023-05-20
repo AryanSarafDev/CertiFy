@@ -41,6 +41,7 @@ class _orgSState extends State<orgS> {
   String fn = "filename";
   bool view = false;
   String nw = "";
+  String orgEmail = "";
   var dd;
 
   Future<List> certData() async {
@@ -53,17 +54,15 @@ class _orgSState extends State<orgS> {
 
   void _name() async {
     final nu = supabase.auth.currentUser!.id;
-    print("apple ${nu}");
 
     final nv = await supabase
         .from('everyone')
         .select('username')
         .textSearch('oid', nu);
 
-    print("apple ${nv}");
-
     setState(() {
       nw = nv[0]['username'];
+      orgEmail = supabase.auth.currentUser!.email!;
     });
   }
 
@@ -188,11 +187,7 @@ class _orgSState extends State<orgS> {
                                       setState(() {
                                         hashvall = newhash;
                                       });
-
-                                      print(hashvall);
-                                    } else {
-                                      // User canceled the picker
-                                    }
+                                    } else {}
                                   },
                                   child: Container(
                                     child: Icon(
@@ -244,8 +239,14 @@ class _orgSState extends State<orgS> {
                               child: ElevatedButton(
                                   onPressed: () async {
                                     try {
-                                      UploadSt().uploadh(hashvall!, fn,
-                                          _emailc.text, _nac.text, filess, nw);
+                                      UploadSt().uploadh(
+                                          hashvall!,
+                                          fn,
+                                          _emailc.text,
+                                          _nac.text,
+                                          filess,
+                                          nw,
+                                          orgEmail);
                                     } catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(

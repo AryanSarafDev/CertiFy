@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supaverify/utils/downloader.dart';
+import 'package:supaverify/utils/hashcalc.dart';
+import 'package:supaverify/utils/uploadd.dart';
 import 'package:supaverify/utils/welcometab.dart';
 
 import '../utils/constants.dart';
@@ -30,7 +32,7 @@ class _orgSState extends State<orgS> {
     certData();
     super.initState();
   }
-
+ String? hashvall;
   late File filess;
 
   double hi = 0;
@@ -38,6 +40,9 @@ class _orgSState extends State<orgS> {
   String fn = "filename";
   bool view = false;
   String nw = "";
+  var dd;
+
+
 
   Future<List> certData() async {
     final _nu = await supabase.auth.currentUser!.id;
@@ -69,6 +74,7 @@ class _orgSState extends State<orgS> {
 
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -166,13 +172,28 @@ class _orgSState extends State<orgS> {
                                       type: FileType.custom,
                                       allowedExtensions: ['pdf'],
                                     );
+                                    setState(() {
+                                      dd= result;
+                                    });
 
                                     if (result != null) {
                                       PlatformFile file = result.files.first;
                                       filess = File(result.files.single.path!);
-                                      setState(() {
+
+                                      setState((){
                                         fn = file.name;
+
+
+
                                       });
+                                      var newhash = await getFileSha256(result.files.single.path!) ;
+                                      setState(() {
+                                        hashvall = newhash;
+                                      });
+
+
+                                        print(hashvall);
+
                                     } else {
                                       // User canceled the picker
                                     }
@@ -226,40 +247,14 @@ class _orgSState extends State<orgS> {
                               height: 50,
                               child: ElevatedButton(
                                   onPressed: () async {
-                                    try {
-                                      String upload = await supabase.storage
-                                          .from('pdfs')
-                                          .upload(
-                                              "${supabase.auth.currentUser!.id}/$fn",
-                                              filess);
-                                      final uploadUrl = supabase.storage
-                                          .from('')
-                                          .getPublicUrl(upload);
-                                      String userid =
-                                          await supabase.auth.currentUser!.id;
-                                      final data = await supabase
-                                          .from('everyone')
-                                          .select('uid')
-                                          .textSearch('email', _emailc.text);
-                                      print(data[0]['uid']);
-
-                                      await supabase
-                                          .from('organization')
-                                          .insert({
-                                        'oid': userid,
-                                        'uid': data[0]['uid'],
-                                        'certificate': uploadUrl,
-                                        'email': _emailc.text,
-                                        'certname': _nac.text,
-                                        'orgname': nw
-                                      });
-                                    } catch (e) {
+                                    try{UploadSt().uploadh(hashvall!, fn, _emailc.text, _nac.text, filess, nw);}catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text("$e"),
                                         backgroundColor: Colors.red,
                                       ));
                                     }
+
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: secondary,

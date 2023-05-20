@@ -31,14 +31,13 @@ class _PerSState extends State<PerS> {
   }
 
   void _name() async {
-    print("apple");
-    final nu = await supabase.auth.currentUser!.id;
+    final nu = supabase.auth.currentUser!.id;
     final nv = await supabase
         .from('everyone')
         .select('username')
         .textSearch('uid', nu);
-    setState(() async {
-      nw = await nv[0]['username'];
+    setState(() {
+      nw = nv[0]['username'];
       setState(() {});
     });
   }
@@ -53,7 +52,8 @@ class _PerSState extends State<PerS> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Stack(children: [Bannerb(),
+        body: Stack(children: [
+          Bannerb(),
           SingleChildScrollView(
             child: Column(
               children: [

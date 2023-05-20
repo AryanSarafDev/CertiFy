@@ -22,13 +22,13 @@ class _ver_SState extends State<ver_S> {
 
   void _name() async {
     print("apple");
-    final nu = await supabase.auth.currentUser!.id;
+    final nu = supabase.auth.currentUser!.id;
     final nv = await supabase
         .from('everyone')
         .select('username')
         .textSearch('uid', nu);
-    setState(() async {
-      nw = await nv[0]['username'];
+    setState(() {
+      nw = nv[0]['username'];
       setState(() {});
     });
   }
@@ -42,13 +42,12 @@ class _ver_SState extends State<ver_S> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [Bannerb(),Column(
-          children: [
-            WelcomeT(name: nw)
-          ],
-        ),]
-      ),
+      body: Stack(children: [
+        Bannerb(),
+        Column(
+          children: [WelcomeT(name: nw)],
+        ),
+      ]),
     );
   }
 }

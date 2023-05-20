@@ -19,15 +19,16 @@ Future<String> getFileSha256(String path) async {
       }
       input.add(chunk);
     }
-  }catch(e)
-  {print(e);}finally {
+  } catch (e) {
+    print(e);
+  } finally {
     // We always cancel the ChunkedStreamReader,
     // this ensures the underlying stream is cancelled.
     reader.cancel();
   }
 
   input.close();
-  print(output.events.single as String);
 
+  print(output.events.single.toString());
   return output.events.single.toString();
 }

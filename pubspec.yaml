@@ -2,7 +2,7 @@ name: supaverify
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -40,11 +39,12 @@ dependencies:
   flutter_dotenv: ^5.0.2
   file_picker: ^5.3.0
   path_provider: ^2.0.15
-
+  web3dart: ^2.6.1
+  web_socket_channel: ^2.4.0
+  http: ^0.13.5
   dio: ^4.0.6
   permission_handler: ^10.2.0
   lecle_downloads_path_provider: ^0.0.2+8
-
 
 dev_dependencies:
   flutter_test:
@@ -62,7 +62,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -70,9 +69,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - .env
-     - assets/images/leaf.png
-     - assets/images/leaf1.png
+    - .env
+    - assets/images/leaf.png
+    - assets/images/leaf1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

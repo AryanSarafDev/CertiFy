@@ -4,7 +4,6 @@ import 'package:crypto/crypto.dart';
 import 'package:convert/convert.dart';
 
 Future<String> getFileSha256(String path) async {
-  print("banana");
   final reader = ChunkedStreamReader(File(path).openRead());
   const chunkSize = 4096;
   var output = AccumulatorSink<Digest>();

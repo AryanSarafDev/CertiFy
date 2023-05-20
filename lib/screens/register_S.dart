@@ -5,6 +5,7 @@ import 'package:supaverify/controllers/dropController.dart';
 
 import '../utils/constants.dart';
 import '../utils/textbox.dart';
+
 List<String> list = <String>[
   'Personal',
   'Organization',
@@ -17,7 +18,6 @@ class registerS extends StatefulWidget {
 }
 
 class _registerSState extends State<registerS> {
-
   TextEditingController _emailc = new TextEditingController();
   TextEditingController _namec = new TextEditingController();
   TextEditingController _passc = new TextEditingController();
@@ -156,19 +156,9 @@ class _registerSState extends State<registerS> {
                                     await supabase.auth.signUp(
                                         password: _passc.text,
                                         email: _emailc.text);
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text("Error Signing up $e"),
-                                      backgroundColor: Colors.red,
-                                    ));
-                                  } finally {
-                                    await supabase.auth.signInWithPassword(
-                                        password: _passc.text,
-                                        email: _emailc.text);
 
                                     String userid =
-                                        await supabase.auth.currentUser!.id;
+                                        supabase.auth.currentUser!.id;
                                     if (isorg == true) {
                                       await supabase.from('everyone').insert({
                                         'username': _namec.text,
@@ -188,7 +178,17 @@ class _registerSState extends State<registerS> {
                                         'email': _emailc.text
                                       });
                                     }
-                                    Navigator.pop(context);
+                                    Get.back();
+
+                                    await supabase.auth.signInWithPassword(
+                                        password: _passc.text,
+                                        email: _emailc.text);
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text("Error Signing up $e"),
+                                      backgroundColor: Colors.red,
+                                    ));
                                   }
                                 },
                                 child: Text(

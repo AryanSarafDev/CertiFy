@@ -32,7 +32,8 @@ class _orgSState extends State<orgS> {
     certData();
     super.initState();
   }
- String? hashvall;
+
+  String? hashvall;
   late File filess;
 
   double hi = 0;
@@ -41,8 +42,6 @@ class _orgSState extends State<orgS> {
   bool view = false;
   String nw = "";
   var dd;
-
-
 
   Future<List> certData() async {
     final _nu = await supabase.auth.currentUser!.id;
@@ -53,16 +52,18 @@ class _orgSState extends State<orgS> {
   }
 
   void _name() async {
-    print("apple");
-    final nu = await supabase.auth.currentUser!.id;
+    final nu = supabase.auth.currentUser!.id;
+    print("apple ${nu}");
+
     final nv = await supabase
         .from('everyone')
         .select('username')
         .textSearch('oid', nu);
 
-    setState(() async {
-      nw = await nv[0]['username'];
-      setState(() {});
+    print("apple ${nv}");
+
+    setState(() {
+      nw = nv[0]['username'];
     });
   }
 
@@ -74,7 +75,6 @@ class _orgSState extends State<orgS> {
 
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -173,27 +173,23 @@ class _orgSState extends State<orgS> {
                                       allowedExtensions: ['pdf'],
                                     );
                                     setState(() {
-                                      dd= result;
+                                      dd = result;
                                     });
 
                                     if (result != null) {
                                       PlatformFile file = result.files.first;
                                       filess = File(result.files.single.path!);
 
-                                      setState((){
+                                      setState(() {
                                         fn = file.name;
-
-
-
                                       });
-                                      var newhash = await getFileSha256(result.files.single.path!) ;
+                                      var newhash = await getFileSha256(
+                                          result.files.single.path!);
                                       setState(() {
                                         hashvall = newhash;
                                       });
 
-
-                                        print(hashvall);
-
+                                      print(hashvall);
                                     } else {
                                       // User canceled the picker
                                     }
@@ -247,14 +243,16 @@ class _orgSState extends State<orgS> {
                               height: 50,
                               child: ElevatedButton(
                                   onPressed: () async {
-                                    try{UploadSt().uploadh(hashvall!, fn, _emailc.text, _nac.text, filess, nw);}catch (e) {
+                                    try {
+                                      UploadSt().uploadh(hashvall!, fn,
+                                          _emailc.text, _nac.text, filess, nw);
+                                    } catch (e) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                         content: Text("$e"),
                                         backgroundColor: Colors.red,
                                       ));
                                     }
-
                                   },
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: secondary,

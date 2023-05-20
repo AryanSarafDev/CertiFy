@@ -16,7 +16,6 @@ class loginS extends StatefulWidget {
 }
 
 class _loginSState extends State<loginS> {
-
   TextEditingController _emailc = new TextEditingController();
 
   TextEditingController _passc = new TextEditingController();
@@ -122,7 +121,7 @@ class _loginSState extends State<loginS> {
           ]),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,8 +135,8 @@ class _loginSState extends State<loginS> {
                         "Sign-Up!",
                         style: TextStyle(color: primary),
                       ),
-                      onTap: () async {
-                        await Get.to(registerS());
+                      onTap: () {
+                        Get.to(() => registerS());
                       })
                 ]),
           )

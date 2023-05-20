@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../utils/constants.dart';
+import '../utils/welcometab.dart';
 
 class ver_S extends StatefulWidget {
   const ver_S({Key? key}) : super(key: key);
@@ -41,46 +42,26 @@ class _ver_SState extends State<ver_S> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Welcome",
-                        style: TextStyle(
-                            color: primary,
-                            fontSize: 50,
-                            fontFamily: 'Markbold'),
-                      ),
-                      Text(
-                        "$nw!",
-                        style: TextStyle(
-                            color: primary,
-                            fontSize: 30,
-                            fontFamily: 'Markbold'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),Spacer(),
-              IconButton(
-                onPressed: () async {
-                  await supabase.auth.signOut();
-                },
-                icon: Icon(Icons.logout),
-                color: primary,
-              )
-            ],
+      body: Stack(
+        children: [Container(
+          width: double.infinity,
+          child: ClipRRect(borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(120)),
+
+            child: Image.asset(
+              "assets/images/leaf.png",
+
+              colorBlendMode: BlendMode.overlay,
+
+
+
+              fit: BoxFit.fill,
+            ),
           ),
-        ],
+        ),Column(
+          children: [
+            WelcomeT(name: nw)
+          ],
+        ),]
       ),
     );
   }

@@ -21,9 +21,8 @@ void download(String name, String url) async {
   if(statuses[Permission.storage]!.isGranted){
 
 
-    Directory root = await getTemporaryDirectory();
 
-    String savename = "file.pdf";
+
     String savePath =  "/storage/emulated/0/Download"+ "/$name.pdf ";
 
 

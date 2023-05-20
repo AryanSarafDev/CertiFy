@@ -6,9 +6,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supaverify/controllers/certificateVerificationController.dart';
 
 class UploadSt {
-  final certificateVerification = CertificateVerificationController();
+  late CertificateVerificationController certificateVerification;
+  late SupabaseClient supabase;
 
-  final SupabaseClient supabase = Supabase.instance.client;
+  UploadSt() {
+    certificateVerification = CertificateVerificationController();
+
+    supabase = Supabase.instance.client;
+  }
 
   String calculateSHA256(String input) {
     List<int> bytes = utf8.encode(input);
@@ -17,9 +22,16 @@ class UploadSt {
     return hash;
   }
 
+  verifyCertificate(String studentHash, String orgHash, String certHash) async {
+    await certificateVerification.init();
+    var x = await certificateVerification.verifyCertificate(
+        studentHash, orgHash, certHash);
+    return x;
+  }
+
   Future<void> uploadh(String certHash, String fn, String emailc, String nac,
       File filess, String nw, String orgEmail) async {
-    certificateVerification.init();
+    await certificateVerification.init();
     String upload = await supabase.storage
         .from('pdfs')
         .upload("${supabase.auth.currentUser!.id}/$fn", filess);
@@ -43,6 +55,7 @@ class UploadSt {
 
     String studentHash = calculateSHA256(emailc);
     String orgHash = calculateSHA256(orgEmail);
-    certificateVerification.addCertificate(studentHash, orgHash, certHash);
+    await certificateVerification.addCertificate(
+        studentHash, orgHash, certHash);
   }
 }

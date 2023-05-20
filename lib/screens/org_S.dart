@@ -87,6 +87,17 @@ class _orgSState extends State<orgS> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               WelcomeT(name: nw),
+              TextButton(
+                  onPressed: () {
+                    UploadSt().verifyCertificate(
+                        "aebd6721742346a1fa847fda68f8edb31cfcf0b436cbfc27d611c2f8caf84290",
+                        "aebd6721742346a1fa847fda68f8edb31cfcf0b436cbfc27d611c2f8caf84290",
+                        "6c5e16ed6879e9a84a30b0970b4e6988ba74083d1a492e069e687935e3d96830");
+                  },
+                  child: Text(
+                    "Verify",
+                    style: TextStyle(color: Colors.black),
+                  )),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: GestureDetector(

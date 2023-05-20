@@ -43,21 +43,7 @@ class _ver_SState extends State<ver_S> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [Container(
-          width: double.infinity,
-          child: ClipRRect(borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(120)),
-
-            child: Image.asset(
-              "assets/images/leaf.png",
-
-              colorBlendMode: BlendMode.overlay,
-
-
-
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),Column(
+        children: [Bannerb(),Column(
           children: [
             WelcomeT(name: nw)
           ],

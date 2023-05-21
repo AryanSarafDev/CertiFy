@@ -19,6 +19,9 @@ class CertificateVerificationController {
   late ContractFunction _getCertificates;
   late ContractFunction _owner;
 
+  final String _privatekey =
+      '0x3018fdb9769dca5fe2c60fc041f6cacc64deaf4acb5ecbcfd95681f5e17b0f4c';
+
   CertificateVerificationController() {}
 
   init() async {
@@ -37,8 +40,7 @@ class CertificateVerificationController {
     print("ls: ${await owner()}");
   }
 
-  final String _privatekey =
-      '0x3018fdb9769dca5fe2c60fc041f6cacc64deaf4acb5ecbcfd95681f5e17b0f4c';
+
 
   Future<void> getABI() async {
     String abiFile = await rootBundle.loadString(

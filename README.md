@@ -28,18 +28,19 @@ The app has 2 main components: The organizer and the person.
 
 ## Installation
 
-To install and run this project locally, you need to have Truffle, Ganache, Node.js, npm, and Supabase installed on your machine.
+To install and run this project locally, you need to have Truffle, Ganache, Node.js and npm installed on your machine.
 
-1. Clone this repository: `git clone https://github.com/yourusername/CertiFy.git`
-2. Navigate to the project folder: `cd CertiFy`
+1. Clone this repository: `https://github.com/AryanSarafDev/supaverify.git`
+2. Navigate to the project folder.
 3. Install dependencies: `npm install`
-4. Start Ganache and create a workspace with your project folder.
-5. Compile and deploy the smart contract: `truffle migrate --reset`
-6. Copy your contract address from Ganache and paste it in `src/config.js`
-7. Create a Supabase project and copy your API URL and public key from Settings > API and paste them in `src/config.js`
-8. Create a table named `certificates` in Supabase with the following columns: `id`, `student_email`, `org_email`, `cert_hash`, `tx_hash`, `file_url`.
-9. Start the development server: `npm start`
-10. Open http://localhost:3000 in your browser and enjoy!
+4. Start Ganache and create a workspace with your project folder and add `lib/contracts/truffle-config.js` in workspace.
+5. Copy your contract address from Ganache and paste it in `lib/controllers/certificateVerificationController.dart`: String _privatekey = '*Here*'
+6. Create a Supabase project and copy your API URL and public key from Settings > API and paste them in `lib/main`: await Supabase.initialize(url:'*Here*', anonKey:'*Here*');
+
+7. Create table named `everyone` in Supabase with the following columns: `id`, `username`,`created_at`, `isorg`,`iper`, `uid`, `oid`, `email`.
+8. Create table named `organization` in Supabase with the following columns: `id`, `filename`,`created_at`, `certname`, `certificate`, `hashval`, `transhash`, `orgemail`,`orgname`,`uid`, `oid`, `email`.
+9. Compile and deploy the smart contract by opening terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
+10. Run the app on your emulator and enjoy!
 
 ## Usage
 
@@ -48,7 +49,7 @@ To use this app as an organizer or a person, you need to sign up with your email
 ### As an organizer
 
 - You can create certificates by filling out a form with the student's email and uploading a pdf file of the certificate.
-- You can view all the certificates you have issued in a table with their details and status (valid or revoked).
+- You can view all the certificates you have issued in a table.
 - You can revoke or delete any certificate you have issued by clicking on the corresponding buttons in the table.
 
 ### As a person
@@ -58,7 +59,7 @@ To use this app as an organizer or a person, you need to sign up with your email
 
 ### As anyone
 
-- You can verify any certificate by entering its student email, org email, cert hash, and tx hash in a form.
+- You can verify any certificate by entering its student email, org email and cert hash, in a form.
 - You can see if the certificate is valid or not based on the result of verifying its hashes on both Supabase and blockchain.
 
 ## License
@@ -68,6 +69,5 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 ## Contributors
 
 This project was created by:
-
-- Your name
-- Your teammate's name
+- Aryan Saraf
+- Rijuth Menon

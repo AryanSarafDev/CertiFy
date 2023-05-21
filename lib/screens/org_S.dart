@@ -11,7 +11,6 @@ import 'package:supaverify/utils/welcometab.dart';
 import '../utils/constants.dart';
 import '../utils/textbox.dart';
 
-
 class orgS extends StatefulWidget {
   const orgS({Key? key}) : super(key: key);
 
@@ -42,6 +41,9 @@ class _orgSState extends State<orgS> {
   String fn = "filename";
   bool view = false;
   String displayname = "";
+  double buttonpress = 20;
+  double buttonshadow = 0;
+  double buttonside = 10;
 
   void setname() async {
     var recieve = await Displayname();
@@ -72,7 +74,7 @@ class _orgSState extends State<orgS> {
             children: [
               WelcomeT(name: displayname),
               Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                padding: EdgeInsets.fromLTRB(buttonside,buttonpress, 10, 0),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -88,38 +90,54 @@ class _orgSState extends State<orgS> {
                         view = false;
                         hi = 0;
                       }
+                      setState(() {
+                        buttonshadow = -12;
+                        buttonpress = 26;
+                        buttonside = 6;
+                      });
+                      Timer(Duration(milliseconds: 200), () {
+                        setState(() {
+                          buttonshadow = 0;
+                          buttonpress = 20;
+                          buttonside = 10;
+                        });
+                      });
+
                     });
                   },
-                  child: Container(
-                    height: 100,
-                    width: 270,
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.circular(90),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: secondary,
-                          spreadRadius: 0,
-                          offset: Offset(-5, 10),
-                        )
-                      ],
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Add a certificate",
-                            style: TextStyle(
-                                color: third,
-                                fontSize: 20,
-                                fontFamily: 'Markbold'),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.add, color: third),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 3),
+                    child: Container(
+                      height: 100,
+                      width: 270,
+                      decoration: BoxDecoration(
+                        color: primary,
+                        borderRadius: BorderRadius.circular(90),
+                        boxShadow: [
+                          BoxShadow(
+                            color: secondary,
+                            spreadRadius: buttonshadow,
+                            offset: Offset(-8, 8),
                           )
                         ],
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Add a certificate",
+                              style: TextStyle(
+                                  color: third,
+                                  fontSize: 20,
+                                  fontFamily: 'Markbold'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(Icons.add, color: third),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -221,13 +239,14 @@ class _orgSState extends State<orgS> {
                                   onPressed: () {
                                     try {
                                       UploadSt().uploadh(
-                                          hashvall!,
-                                          fn,
-                                          _emailc.text,
-                                          _nac.text,
-                                          filess,
-                                          displayname,
-                                          supabase.auth.currentUser!.email!,);
+                                        hashvall!,
+                                        fn,
+                                        _emailc.text,
+                                        _nac.text,
+                                        filess,
+                                        displayname,
+                                        supabase.auth.currentUser!.email!,
+                                      );
                                     } catch (e) {
                                       Get.snackbar("$e", "",
                                           backgroundColor: Colors.red);
@@ -273,7 +292,9 @@ class _orgSState extends State<orgS> {
                           ),
                           IconButton(
                             onPressed: () {
-                              setState(() {certData = certificateData();});
+                              setState(() {
+                                certData = certificateData();
+                              });
                             },
                             icon: const Icon(Icons.refresh_outlined),
                             color: third,

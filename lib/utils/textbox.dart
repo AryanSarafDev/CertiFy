@@ -12,6 +12,7 @@ class TextString extends StatelessWidget {
   final double hs;
 
 
+
   const TextString(
       {Key? key,
         required this.textEditingController,

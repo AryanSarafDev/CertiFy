@@ -1,7 +1,3 @@
-A Readme is a document that provides essential information about a project, such as its name, description, features, installation, usage, license, and contributors. A Readme helps potential users and developers to understand what the project is about and how to use it.
-
-Here is an example of a Readme for your project, using markdown syntax:
-
 # CertiFy
 
 CertiFy is a blockchain-backed certificate verification app. The inspiration for such an app came from the immediate need to curb the fake certificates that can be easily made with decent skills.

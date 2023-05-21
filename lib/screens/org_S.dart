@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:supaverify/utils/downloader.dart';
+import 'package:supaverify/controllers/certListing.dart';
 import 'package:supaverify/utils/hashcalc.dart';
 import 'package:supaverify/utils/uploadd.dart';
 import 'package:supaverify/utils/welcometab.dart';
-
 import '../utils/constants.dart';
 import '../utils/textbox.dart';
+
 
 class orgS extends StatefulWidget {
   const orgS({Key? key}) : super(key: key);
@@ -23,13 +21,16 @@ class orgS extends StatefulWidget {
 
 class _orgSState extends State<orgS> {
   final SupabaseClient supabase = Supabase.instance.client;
-  TextEditingController _emailc = new TextEditingController();
-  TextEditingController _nac = new TextEditingController();
+  final TextEditingController _emailc = TextEditingController();
+  final TextEditingController _nac = TextEditingController();
+  late Future<List<dynamic>> certData;
 
   @override
   void initState() {
-    _name();
-    certData();
+    setState(() {
+      certData = certificateData();
+      setname();
+    });
     super.initState();
   }
 
@@ -40,30 +41,14 @@ class _orgSState extends State<orgS> {
   double hi1 = 0;
   String fn = "filename";
   bool view = false;
-  String nw = "";
-  String orgEmail = "";
-  var dd;
+  String displayname = "";
 
-  Future<List> certData() async {
-    final _nu = await supabase.auth.currentUser!.id;
-    final certd =
-        await supabase.from('organization').select('*').textSearch('oid', _nu);
-    print(certd);
-    return certd;
-  }
-
-  void _name() async {
-    final nu = supabase.auth.currentUser!.id;
-
-    final nv = await supabase
-        .from('everyone')
-        .select('username')
-        .textSearch('oid', nu);
-
+  void setname() async {
+    var recieve = await Displayname();
     setState(() {
-      nw = nv[0]['username'];
-      orgEmail = supabase.auth.currentUser!.email!;
+      displayname = recieve;
     });
+    setState(() {});
   }
 
   @override
@@ -71,7 +56,6 @@ class _orgSState extends State<orgS> {
     supabase.dispose;
     _emailc.dispose();
     _nac.dispose();
-
     super.dispose();
   }
 
@@ -80,24 +64,13 @@ class _orgSState extends State<orgS> {
     return SafeArea(
         child: Scaffold(
       body: Stack(children: [
-        Bannerb(),
+        const Bannerb(),
         SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              WelcomeT(name: nw),
-              TextButton(
-                  onPressed: () {
-                    UploadSt().verifyCertificate(
-                        "aebd6721742346a1fa847fda68f8edb31cfcf0b436cbfc27d611c2f8caf84290",
-                        "aebd6721742346a1fa847fda68f8edb31cfcf0b436cbfc27d611c2f8caf84290",
-                        "6c5e16ed6879e9a84a30b0970b4e6988ba74083d1a492e069e687935e3d96830");
-                  },
-                  child: Text(
-                    "Verify",
-                    style: TextStyle(color: Colors.black),
-                  )),
+              WelcomeT(name: displayname),
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: GestureDetector(
@@ -106,7 +79,7 @@ class _orgSState extends State<orgS> {
                       if (hi == 0) {
                         hi = 300;
 
-                        Timer(Duration(milliseconds: 400), () {
+                        Timer(const Duration(milliseconds: 400), () {
                           setState(() {
                             view = true;
                           });
@@ -120,8 +93,19 @@ class _orgSState extends State<orgS> {
                   child: Container(
                     height: 100,
                     width: 270,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: primary,
+                      borderRadius: BorderRadius.circular(90),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: secondary,
+                          spreadRadius: 0,
+                          offset: Offset(-5, 10),
+                        )
+                      ],
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
                         children: [
                           Text(
@@ -132,22 +116,11 @@ class _orgSState extends State<orgS> {
                                 fontFamily: 'Markbold'),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(8.0),
                             child: Icon(Icons.add, color: third),
                           )
                         ],
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.circular(90),
-                      boxShadow: [
-                        BoxShadow(
-                          color: secondary,
-                          spreadRadius: 0,
-                          offset: Offset(-5, 10),
-                        )
-                      ],
                     ),
                   ),
                 ),
@@ -156,7 +129,7 @@ class _orgSState extends State<orgS> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
+                  duration: const Duration(milliseconds: 400),
                   height: hi,
                   decoration: BoxDecoration(
                     color: primary,
@@ -182,9 +155,6 @@ class _orgSState extends State<orgS> {
                                       type: FileType.custom,
                                       allowedExtensions: ['pdf'],
                                     );
-                                    setState(() {
-                                      dd = result;
-                                    });
 
                                     if (result != null) {
                                       PlatformFile file = result.files.first;
@@ -201,15 +171,15 @@ class _orgSState extends State<orgS> {
                                     } else {}
                                   },
                                   child: Container(
-                                    child: Icon(
-                                      Icons.file_copy,
-                                      color: primary,
-                                    ),
                                     height: 60,
                                     width: 100,
                                     decoration: BoxDecoration(
                                       color: secondary,
                                       borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Icon(
+                                      Icons.file_copy,
+                                      color: primary,
                                     ),
                                   ),
                                 ),
@@ -218,7 +188,7 @@ class _orgSState extends State<orgS> {
                                       horizontal: 20),
                                   child: Text(
                                     fn,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: third,
                                         fontSize: 20,
                                         fontFamily: 'Markbold'),
@@ -248,7 +218,7 @@ class _orgSState extends State<orgS> {
                           child: SizedBox(
                               height: 50,
                               child: ElevatedButton(
-                                  onPressed: () async {
+                                  onPressed: () {
                                     try {
                                       UploadSt().uploadh(
                                           hashvall!,
@@ -256,14 +226,11 @@ class _orgSState extends State<orgS> {
                                           _emailc.text,
                                           _nac.text,
                                           filess,
-                                          nw,
-                                          orgEmail);
+                                          displayname,
+                                          supabase.auth.currentUser!.email!,);
                                     } catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text("$e"),
-                                        backgroundColor: Colors.red,
-                                      ));
+                                      Get.snackbar("$e", "",
+                                          backgroundColor: Colors.red);
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -271,7 +238,7 @@ class _orgSState extends State<orgS> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20))),
-                                  child: Text(
+                                  child: const Text(
                                     "Submit",
                                     style:
                                         TextStyle(color: primary, fontSize: 20),
@@ -294,8 +261,8 @@ class _orgSState extends State<orgS> {
                     children: [
                       Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
+                          const Padding(
+                            padding: EdgeInsets.all(12.0),
                             child: Text(
                               "Certificates Issued",
                               style: TextStyle(
@@ -306,93 +273,14 @@ class _orgSState extends State<orgS> {
                           ),
                           IconButton(
                             onPressed: () {
-                              setState(() {});
+                              setState(() {certData = certificateData();});
                             },
-                            icon: Icon(Icons.refresh_outlined),
+                            icon: const Icon(Icons.refresh_outlined),
                             color: third,
                           )
                         ],
                       ),
-                      FutureBuilder(
-                        future: certData(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(
-                                child: Text(snapshot.error.toString()));
-                          }
-
-                          if (snapshot.hasData) {
-                            if (snapshot.data.length == 0) {
-                              return Center(
-                                child: Text("Empty"),
-                              );
-                            }
-                            return Expanded(
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder: (context, int index) {
-                                    var stuff = snapshot.data[index];
-                                    var namee = stuff['certname'];
-                                    var link = stuff['certificate'].toString();
-                                    var emaill = stuff['email'];
-                                    var timee = stuff['created_at'];
-                                    print("$index) ");
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: secondary,
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            title: Text(
-                                              "$namee",
-                                              style: TextStyle(color: primary),
-                                              textAlign: TextAlign.start,
-                                            ),
-                                            subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "$emaill",
-                                                  style:
-                                                      TextStyle(color: primary),
-                                                  textAlign: TextAlign.start,
-                                                ),
-                                                Text(
-                                                  "$timee",
-                                                  style:
-                                                      TextStyle(color: primary),
-                                                  textAlign: TextAlign.start,
-                                                ),
-                                              ],
-                                            ),
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.download,
-                                                color: primary,
-                                              ),
-                                              onPressed: () {
-                                                Downloader()
-                                                    .download(namee, link);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            );
-                          }
-                          return Center(child: CircularProgressIndicator());
-                        },
-                      )
+                      Orglist(certdata: certData),
                     ],
                   ),
                 ),

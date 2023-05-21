@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supaverify/controllers/certListing.dart';
 
 import '../utils/constants.dart';
 import '../utils/downloader.dart';
@@ -14,32 +15,23 @@ class PerS extends StatefulWidget {
 
 class _PerSState extends State<PerS> {
   final SupabaseClient supabase = Supabase.instance.client;
-  String nw = "";
+  String displayname = "";
+  var certData;
+
   @override
   void initState() {
-    _name();
-    certData();
+    setname();
+    certData=certificateDataforUser();
     super.initState();
   }
 
-  Future<List> certData() async {
-    final _nu = await supabase.auth.currentUser!.id;
-    final certd =
-        await supabase.from('organization').select('*').textSearch('uid', _nu);
-    print(certd);
-    return certd;
-  }
 
-  void _name() async {
-    final nu = supabase.auth.currentUser!.id;
-    final nv = await supabase
-        .from('everyone')
-        .select('username')
-        .textSearch('uid', nu);
+  void setname() async {
+    var recieve = await DisplaynameUser();
     setState(() {
-      nw = nv[0]['username'];
-      setState(() {});
+      displayname = recieve;
     });
+    setState(() {});
   }
 
   @override
@@ -57,7 +49,7 @@ class _PerSState extends State<PerS> {
           SingleChildScrollView(
             child: Column(
               children: [
-                WelcomeT(name: nw),
+                WelcomeT(name: displayname),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -90,88 +82,7 @@ class _PerSState extends State<PerS> {
                             )
                           ],
                         ),
-                        FutureBuilder(
-                          future: certData(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasError) {
-                              return Center(
-                                  child: Text(snapshot.error.toString()));
-                            }
-
-                            if (snapshot.hasData) {
-                              if (snapshot.data.length == 0) {
-                                return Center(
-                                  child: Text("Empty"),
-                                );
-                              }
-                              return Expanded(
-                                child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data.length,
-                                    itemBuilder: (context, int index) {
-                                      var stuff = snapshot.data[index];
-                                      var namee = stuff['certname'];
-                                      var link =
-                                          stuff['certificate'].toString();
-                                      var timee = stuff['created_at'];
-                                      var orgg = stuff['orgname'];
-
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: secondary,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: ListTile(
-                                              title: Text(
-                                                "$namee",
-                                                style:
-                                                    TextStyle(color: primary),
-                                                textAlign: TextAlign.start,
-                                              ),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "$orgg",
-                                                    style: TextStyle(
-                                                        color: primary),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                  Text(
-                                                    "$timee",
-                                                    style: TextStyle(
-                                                        color: primary),
-                                                    textAlign: TextAlign.start,
-                                                  ),
-                                                ],
-                                              ),
-                                              trailing: IconButton(
-                                                icon: Icon(
-                                                  Icons.download,
-                                                  color: primary,
-                                                ),
-                                                onPressed: () {
-                                                  Downloader()
-                                                      .download(namee, link);
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                              );
-                            }
-                            return Center(child: CircularProgressIndicator());
-                          },
-                        )
+                        UserList(certdata: certData)
                       ],
                     ),
                   ),

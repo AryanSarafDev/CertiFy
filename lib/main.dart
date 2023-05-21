@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:supaverify/controllers/dropController.dart';
 import 'package:supaverify/screens/login_S.dart';
 import 'package:supaverify/screens/navigate.dart';
-import 'package:supaverify/screens/org_S.dart';
-import 'package:supaverify/screens/per_S.dart';
-import 'package:supaverify/screens/register_S.dart';
 import 'package:supaverify/utils/constants.dart';
-
-String bools = "";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,15 +47,6 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final SupabaseClient supabase = Supabase.instance.client;
   User? _user;
-  String? idd;
-  // variables for checking type of user
-  var orga = false;
-  var pers = false;
-  var veri = false;
-  void states() async {
-    final idd = supabase.auth.currentUser!.email;
-  }
-
   @override
   void initState() {
     _getAuth();

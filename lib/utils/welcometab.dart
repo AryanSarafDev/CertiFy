@@ -88,4 +88,28 @@ class Bannerb extends StatelessWidget {
     );
   }
 }
+Future<String> Displayname() async {
+  var supabase = Supabase.instance.client;
+  final nu = supabase.auth.currentUser!.id;
+
+  final nv = await supabase
+      .from('everyone')
+      .select('username')
+      .textSearch('oid', nu);
+
+  return nv[0]['username'];
+}
+Future<String> DisplaynameUser() async {
+  var supabase = Supabase.instance.client;
+  final nu = supabase.auth.currentUser!.id;
+
+  final nv = await supabase
+      .from('everyone')
+      .select('username')
+      .textSearch('uid', nu);
+
+  return nv[0]['username'];
+}
+
+
 

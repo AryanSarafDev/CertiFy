@@ -23,9 +23,11 @@ class UploadSt {
   }
 
   verifyCertificate(String studentHash, String orgHash, String certHash) async {
+
     await certificateVerification.init();
     var x = await certificateVerification.verifyCertificate(
         studentHash, orgHash, certHash);
+    print(x);
     return x;
   }
 
@@ -43,19 +45,41 @@ class UploadSt {
         .textSearch('email', emailc);
     print(data[0]['uid']);
 
+    String studentHash = calculateSHA256(emailc);
+    String orgHash = calculateSHA256(orgEmail);
+    var tranhash = await certificateVerification.addCertificate(
+        studentHash, orgHash, certHash);
+    print(tranhash);
+
+
+
+
+
+    DateTime now =  DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
     await supabase.from('organization').insert({
+      'created_at' : date.toString(),
       'oid': userid,
       'uid': data[0]['uid'],
       'certificate': uploadUrl,
       'email': emailc,
       'certname': nac,
       'orgname': nw,
-      'hashval': certHash
+      'hashval': certHash,
+      'filename': fn,
+      'orgemail': orgEmail,
+      'transhash': tranhash
     });
 
-    String studentHash = calculateSHA256(emailc);
-    String orgHash = calculateSHA256(orgEmail);
-    await certificateVerification.addCertificate(
-        studentHash, orgHash, certHash);
+
+  }
+  void revoke(String emaill, String orgemail,String hash) async{
+    await certificateVerification.init();
+    String studentHash = calculateSHA256(emaill);
+    String orgHash = calculateSHA256(orgemail);
+    await certificateVerification.revokeCertificate(studentHash, orgHash, hash);
+
+
+
   }
 }

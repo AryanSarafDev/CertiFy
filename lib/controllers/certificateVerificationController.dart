@@ -38,7 +38,7 @@ class CertificateVerificationController {
   }
 
   final String _privatekey =
-      '0x2706143bea7f0439b66e99eadbd884569b7352b8adc3b10ee2c1ad4dcde8000f';
+      '0x3018fdb9769dca5fe2c60fc041f6cacc64deaf4acb5ecbcfd95681f5e17b0f4c';
 
   Future<void> getABI() async {
     String abiFile = await rootBundle.loadString(
@@ -64,7 +64,7 @@ class CertificateVerificationController {
   }
 
   addCertificate(String studentHash, String orgHash, String certHash) async {
-    await _web3client.sendTransaction(
+   var tranhash = await _web3client.sendTransaction(
         _creds,
         Transaction.callContract(
           contract: _deployedContract,
@@ -72,6 +72,7 @@ class CertificateVerificationController {
           parameters: [studentHash, orgHash, certHash],
         ),
         chainId: cid.toInt());
+   return tranhash;
   }
 
   revokeCertificate(String studentHash, String orgHash, String certHash) async {

@@ -1,7 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:crypto/crypto.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supaverify/controllers/VerifierBox.dart';
+import 'package:supaverify/utils/uploadd.dart';
 
 import '../utils/constants.dart';
+import '../utils/hashcalc.dart';
+import '../utils/textbox.dart';
 import '../utils/welcometab.dart';
 
 class ver_S extends StatefulWidget {
@@ -13,41 +24,21 @@ class ver_S extends StatefulWidget {
 
 class _ver_SState extends State<ver_S> {
   final SupabaseClient supabase = Supabase.instance.client;
-  String nw = "";
   @override
   void initState() {
-    _name();
     super.initState();
-  }
-
-  void _name() async {
-    print("apple");
-    final nu = supabase.auth.currentUser!.id;
-    final nv = await supabase
-        .from('everyone')
-        .select('username')
-        .textSearch('uid', nu);
-    setState(() {
-      nw = nv[0]['username'];
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    supabase.dispose;
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        Bannerb(),
-        Column(
-          children: [WelcomeT(name: nw)],
-        ),
-      ]),
-    );
+      body: ListView(
+        children: [Stack(children: [
+          Bannerb(),
+          Column(
+            children: [WelcomeT(name: "Guest"),VerifierBox()
+            ]),]
+    ),
+      ]));
   }
 }

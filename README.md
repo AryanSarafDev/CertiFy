@@ -13,8 +13,7 @@ CertiFy is a blockchain-based certificate issuing and verification application b
 
 
 ## Video Demonstration
-
-
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/geXSkIU9hW4/0.jpg)](https://www.youtube.com/watch?v=geXSkIU9hW4)
 ## Inspiration
 
 CertiFy was inspired by the urgent need to address the issue of counterfeit certificates. The traditional verification process is time-consuming and bureaucratic, and the involvement of intermediaries can lead to corruption.

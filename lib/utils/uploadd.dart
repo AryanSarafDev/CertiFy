@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -33,7 +34,16 @@ class UploadSt {
     var x = await certificateVerification.verifyCertificate(
         studentHash, orgHash, certHash);
     print(x);
+    var transactionhash =   await supabase.from('organization').select('transhash').textSearch('hashval', certHash);
+    var displayhash = await transactionhash[0]['transhash'];
+    await Clipboard.setData(ClipboardData(text: "$displayhash"));
+    Get.defaultDialog(title: "Transaction Hash: $displayhash",middleText:"Hash copied to text board" );
+
+
+
+
     return x;
+
   }
 
   Future<void> uploadh(String certHash, String fn, String emailc, String nac,

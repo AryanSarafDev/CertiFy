@@ -113,6 +113,7 @@ class _VerifierBoxState extends State<VerifierBox> {
                           hintText: "Enter Holder's email",
                           textInputType: TextInputType.text),
                     ),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),

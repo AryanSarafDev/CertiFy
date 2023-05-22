@@ -2,6 +2,19 @@
 
 CertiFy is a blockchain-based certificate issuing and verification application built with Flutter, using Supabase as its database and Solidity for its Smart Contract, compatible with any EVM (Ethereum Virtual Machine).
 
+
+## App Screenshots
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/1.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/2.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/3.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/4.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/5.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/6.jpg)
+
+
+## Video Demonstration
+
+
 ## Inspiration
 
 CertiFy was inspired by the urgent need to address the issue of counterfeit certificates. The traditional verification process is time-consuming and bureaucratic, and the involvement of intermediaries can lead to corruption.
@@ -121,7 +134,7 @@ To use this app as an organizer or a person, you need to sign up with your email
 
 ### As a person
 
-* You can view all the certificates you have received in a list with their details and status (valid or revoked).
+* You can view all the certificates you have received in a list with their details.
     
 * You can download any certificate you have received by clicking on the download button in the table.
     
@@ -132,11 +145,6 @@ To use this app as an organizer or a person, you need to sign up with your email
     
 * You can see if the certificate is valid or not based on the result of verifying its hashes using blockchain technology.
 
-
-## App Screenshots
-
-
-## Video Demonstration
 
 
 

@@ -55,6 +55,13 @@ The application has 2 main components: Organization and Person.
     
 * For every valid certificate, we will also show the corresponding transaction hash so a user can manually verify using blockchain explorers.
     
+# How We've Utilized Supabase!
+
+* We've utilized Supabase's authentication system to enable organizations and users to sign up. In our opinion, this is one of the most impressive features provided by Supabase, as it was incredibly fast and simple to set up.
+
+* We store user and certificate details using Supabase's database. This enables us to export a schema, encouraging others to self-host and support open source!
+
+* Additionally, we store every PDF uploaded by users using Supabase's storage. This feature enables us to swiftly facilitate certificate downloads for users in the future. Conventionally, this process would require extensive server-side setup, but Supabase has made it hassle-free!
 
 ## Installation
 

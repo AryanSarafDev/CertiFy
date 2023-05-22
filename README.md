@@ -99,7 +99,7 @@ To use this app as an organizer or a person, you need to sign up with your email
 
 ## License
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see [LICENSE](https://github.com/Leaflet/Leaflet.markercluster/blob/master/MIT-LICENCE.txt) file for details.
 
 ## Contributors
 

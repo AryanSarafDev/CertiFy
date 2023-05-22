@@ -75,8 +75,8 @@ To install and run this project locally, you need to have Flutter, Truffle, Gana
     
 6. Copy your `private key address` from Ganache and paste it for `PRIVATE_KEY`
     
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_3jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_4jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_3.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_4.jpg)
     
 7. Create a Supabase project and copy your `API URL` and `public key` from `Settings > API` and paste it for `SUPABASE_URL & SUPABASE_KEY`
     

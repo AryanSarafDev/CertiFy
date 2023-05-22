@@ -1,6 +1,8 @@
 
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+
 
 
 import 'package:permission_handler/permission_handler.dart';
@@ -38,7 +40,9 @@ void download(String name, String url) async {
               //you can build progressbar feature too
             }
           });
+
       print("File is saved to download folder.");
+      Get.snackbar("Download", "completed");
     } on DioError catch (e) {
       print(e.message);
     }

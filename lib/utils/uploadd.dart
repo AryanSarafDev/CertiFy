@@ -2,8 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supaverify/controllers/certificateVerificationController.dart';
+
+import 'constants.dart';
 
 class UploadSt {
   late CertificateVerificationController certificateVerification;
@@ -57,6 +62,7 @@ class UploadSt {
 
     DateTime now =  DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
+    try{
     await supabase.from('organization').insert({
       'created_at' : date.toString(),
       'oid': userid,
@@ -69,7 +75,9 @@ class UploadSt {
       'filename': fn,
       'orgemail': orgEmail,
       'transhash': tranhash
-    });
+    });}catch(e){Get.snackbar("Error","$e",colorText: Colors.red);}finally{
+      Get.snackbar("Upload completed!","You can now refresh the list",colorText: Colors.green);
+    }
 
 
   }

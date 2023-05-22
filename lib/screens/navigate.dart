@@ -45,7 +45,7 @@ class _NavigateSState extends State<NavigateS> {
                 return orgS();
               else if (pers)
                 return PerS();
-              else if (veri) return ver_S();
+              else  return ver_S();
 
             }
               return Center(child: CircularProgressIndicator());

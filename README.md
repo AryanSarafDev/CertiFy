@@ -13,6 +13,10 @@ CertiFy is a blockchain-based certificate issuing and verification application b
 ![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/7.jpg)
 
 
+https://github.com/AryanSarafDev/CertiFy/assets/96824236/6c4e53f3-736b-4809-9c0f-8aeef71e685b
+
+
+
 ## Video Demonstration
 Link to youtube video demonstration👇
 

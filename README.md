@@ -55,7 +55,7 @@ The application has 2 main components: Organization and Person.
     
 * For every valid certificate, we will also show the corresponding transaction hash so a user can manually verify using blockchain explorers.
     
-# How We've Utilized Supabase!
+## How We've Utilized Supabase!
 
 * We've utilized Supabase's authentication system to enable organizations and users to sign up. In our opinion, this is one of the most impressive features provided by Supabase, as it was incredibly fast and simple to set up.
 

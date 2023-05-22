@@ -4,12 +4,12 @@ CertiFy is a blockchain-based certificate issuing and verification application b
 
 
 ## App Screenshots
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/1.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/2.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/3.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/4.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/5.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/6.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/1.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/2.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/3.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/4.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/5.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/6.jpg)
 
 
 ## Video Demonstration
@@ -68,7 +68,7 @@ The application has 2 main components: Organization and Person.
 
 To install and run this project locally, you need to have Flutter, Truffle, Ganache, Node.js with npm installed on your machine.
 
-1. Clone this repository: [`https://github.com/AryanSarafDev/supaverify.git`](https://github.com/AryanSarafDev/supaverify.git)
+1. Clone this repository: [`https://github.com/AryanSarafDev/certify.git`](https://github.com/AryanSarafDev/certify.git)
     
 2. Navigate to `lib/contracts`
     
@@ -76,15 +76,15 @@ To install and run this project locally, you need to have Flutter, Truffle, Gana
     
 4. Start Ganache and create a workspace with your project folder and add `lib/contracts/truffle-config.js` in workspace.
 
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_1.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_2.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/install_1.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/install_2.jpg)
     
 5. Open the `.env file` and enter the appropriate details as listed below.
     
 6. Copy your `private key address` from Ganache and paste it for `PRIVATE_KEY`
     
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_3.jpg)
-![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_4.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/install_3.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/certify/blob/master/screenshots/install_4.jpg)
     
 7. Create a Supabase project and copy your `API URL` and `public key` from `Settings > API` and paste it for `SUPABASE_URL & SUPABASE_KEY`
     

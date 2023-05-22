@@ -67,10 +67,16 @@ To install and run this project locally, you need to have Flutter, Truffle, Gana
 3. Install dependencies using `npm install`
     
 4. Start Ganache and create a workspace with your project folder and add `lib/contracts/truffle-config.js` in workspace.
+
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_1.jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_2.jpg)
     
 5. Open the `.env file` and enter the appropriate details as listed below.
     
 6. Copy your `private key address` from Ganache and paste it for `PRIVATE_KEY`
+    
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_3jpg)
+![screen.jpg](https://github.com/AryanSarafDev/supaverify/blob/master/screenshots/install_4jpg)
     
 7. Create a Supabase project and copy your `API URL` and `public key` from `Settings > API` and paste it for `SUPABASE_URL & SUPABASE_KEY`
     

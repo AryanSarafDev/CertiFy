@@ -1,81 +1,112 @@
-# CertiFy
+# CertiFy - A blockchain based certificate issuing & verification platform.
 
-CertiFy is a blockchain-backed certificate verification app. The inspiration for such an app came from the immediate need to curb the fake certificates that can be easily made with decent skills.
+CertiFy is a blockchain-based certificate issuing and verification application built with Flutter, using Supabase as its database and Solidity for its Smart Contract, compatible with any EVM (Ethereum Virtual Machine).
 
-The conventional process of verify certificates usually involves lots of bureaucracy and that involves a lot of time.
+## Inspiration
 
-Our system is proof that blockchain coupled with Supabase's awesome features can help solve this issue.
+CertiFy was inspired by the urgent need to address the issue of counterfeit certificates. The traditional verification process is time-consuming and bureaucratic, and the involvement of intermediaries can lead to corruption.
 
-We've currently deployed this using a local blockchain using Truffle and Ganace. But we're very confident that we can migrate this to the mainnet (actual blockchain like Ethereum or Polygon) within a couple steps.
+Our platform demonstrates that combining blockchain technology with Supabase's powerful features can provide a secure and transparent solution to this pressing problem.
 
-## Features
+### NOTE:
 
-The app has 2 main components: The organizer and the person.
+**We have currently deployed this using a local blockchain through Truffle and Ganache. We haven't deployed it on the mainnet because we are both students who lack the necessary funds for proper deployment.**
 
-- The organizer can issue certificates (currently in pdf) to a person using their email.
-- The certificates issued to a person can be viewed in their screen and also the name of organization issuing it will be seen.
-- The smart contract (written using Solidity) is used to run on any EVM (Ethereum Virtual Machine) compatible blockchain.
-- When a certificate is added, the hash of the student email, org email and a hash of the pdf contents is computed. These details are stored on SupaBase and the pdf itself is stored on SupaBase storage.
-- We also store these hash on the blockchain using the smart contract and the corresponding transaction hash is stored on SupaBase.
-- The transaction hash makes it possible for anyone to verify the authenticity manually by entering the hash into a website such as getblock.io (blockchain explorers).
-- Each certificate has an extra variable in the smart contract to denote if the certificate is revoked or not.
-- When the certificate issued by an org is deleted by the org, the entry is removed from db and file is also deleted.
-- We modify the certificate details on blockchain by setting the revoked variable to true.
-- Whenever verify certificate is called, our contract returns true if a certificate hash for a particular organisation is linked to a participant student's hash.
-- If such a certificate exists and the revoked is false, then the function returns true indicating the certificate is valid.
-- In the Verify screen that anyone can open, the user has to enter all the details linked to the certificate. The hashes are computed again and checked using the verify function which reads the data from blockchain and returns a Boolean value.
-- For every valid certificate, we will also show the corresponding hash so a user can manually verify.
+## Description & Process
+
+The application has 2 main components: Organization and Person.
+
+#### Certificate Issuing
+
+* The organizer can issue certificates (currently only in PDF) to a registered person using their email.
+    
+* The certificates issued to a person can be viewed on their screen along with the name of the organization that issued the certificate.
+    
+* When a certificate is issued, the hash of the student email, organization email, and a hash of PDF contents is computed.
+    
+* These details are then stored on the blockchain using our smart contract and the corresponding transaction hash is stored on Supabase's database. The pdf itself is stored on Supabase's storage for downloading it in the future.
+    
+* The transaction hash will make it possible for anyone to verify the authenticity manually by entering the hash into a website such as [https://getblock.io](https://getblock.io) (blockchain explorers).
+    
+    #### Certificate Verification
+    
+* Each certificate detail stored on the blockchain has an additional boolean variable called `isRevoked` associated with it.
+    
+* When a certificate issued by the organization is deleted, the details & file stored on Supabase is deleted.
+    
+* We modify this variable on the blockchain to `true` indicating this particular certificate has been revoked. This preserves the immutability of the blockchain.
+    
+* In the certificate verification screen, the user has to enter all the student email, and organization email and upload the original PDF.
+    
+* We recompute the hashes and use the smart contract to check
+    
+    if such a certificate is stored and if it is not revoked. If all these conditions match, we return true, indicating the certificate is valid.
+    
+* For every valid certificate, we will also show the corresponding transaction hash so a user can manually verify using blockchain explorers.
+    
 
 ## Installation
 
-To install and run this project locally, you need to have Truffle, Ganache, Node.js and npm installed on your machine.
+To install and run this project locally, you need to have Flutter, Truffle, Ganache, Node.js with npm installed on your machine.
 
-1. Clone this repository: `https://github.com/AryanSarafDev/supaverify.git`
-2. Navigate to the project folder.
-3. Install dependencies: `npm install`
+1. Clone this repository: [`https://github.com/AryanSarafDev/supaverify.git`](https://github.com/AryanSarafDev/supaverify.git)
+    
+2. Navigate to `lib/contracts`
+    
+3. Install dependencies using `npm install`
+    
 4. Start Ganache and create a workspace with your project folder and add `lib/contracts/truffle-config.js` in workspace.
-5. Create .env file.
-6. Copy your contract address from Ganache and paste it in .env: PRIVATE_KEY = "*Here*"
-7. Create a Supabase project and copy your API URL and public key from Settings > API and paste it in .env: SUPABASE_URL = "*Here*" & SUPABASE_KEY = "*Here*" .
-
-8. Create table named `everyone` in Supabase with the following columns: `id`, `username`,`created_at`, `isorg`,`iper`, `uid`, `oid`, `email`.
-9. Create table named `organization` in Supabase with the following columns: `id`, `filename`,`created_at`, `certname`, `certificate`, `hashval`, `transhash`, `orgemail`,`orgname`,`uid`, `oid`, `email`.
-10. Compile and deploy the smart contract by opening terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
-11. Run the app on your emulator and enjoy!
-## Schemas for table
-# everyone:
-
-create table
-public.everyone (
-id bigint generated by default as identity not null,
-created_at timestamp with time zone null default now(),
-uid text not null default ''::text,
-username text not null default ''::text,
-isorg boolean null default false,
-isper boolean null default false,
-oid text null default ''::text,
-email text null default ''::text,
-constraint everyone_pkey primary key (id)
-) tablespace pg_default;
-
-## organization:
-create table
-public.organization (
-id bigint generated by default as identity not null,
-created_at date null,
-email text null default ''::text,
-certificate text null default ''::text,
-uid text null default ''::text,
-oid text null default ''::text,
-certname text null default ''::text,
-orgname text null default ''::text,
-hashval text null,
-filename text null default ''::text,
-orgemail text null default ''::text,
-transhash text null,
-constraint organization_pkey primary key (id)
-) tablespace pg_default;
-
+    
+5. Open the `.env file` and enter the appropriate details as listed below.
+    
+6. Copy your `private key address` from Ganache and paste it for `PRIVATE_KEY`
+    
+7. Create a Supabase project and copy your `API URL` and `public key` from `Settings > API` and paste it for `SUPABASE_URL & SUPABASE_KEY`
+    
+8. Create two tables called `everyone` (which stores user details) and `organization` (which stores the issued certificate details) using the following schema code:
+    
+    #### everyone:
+    
+    ```dart
+    create table
+      public.everyone (
+        id bigint generated by default as identity not null,
+        created_at timestamp with time zone null default now(),
+        uid text not null default ''::text,
+        username text not null default ''::text,
+        isorg boolean null default false,
+        isper boolean null default false,
+        oid text null default ''::text,
+        email text null default ''::text,
+        constraint everyone_pkey primary key (id)
+      ) tablespace pg_default;
+    ```
+    
+    #### organization:
+    
+    ```dart
+    create table
+      public.organization (
+        id bigint generated by default as identity not null,
+        created_at date null,
+        email text null default ''::text,
+        certificate text null default ''::text,
+        uid text null default ''::text,
+        oid text null default ''::text,
+        certname text null default ''::text,
+        orgname text null default ''::text,
+        hashval text null,
+        filename text null default ''::text,
+        orgemail text null default ''::text,
+        transhash text null,
+        constraint organization_pkey primary key (id)
+      ) tablespace pg_default;
+    ```
+    
+9. Compile and deploy the smart contract by opening the terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
+    
+10. Run the app on your emulator and enjoy!
+    
 
 ## Usage
 
@@ -83,19 +114,26 @@ To use this app as an organizer or a person, you need to sign up with your email
 
 ### As an organizer
 
-- You can create certificates by filling out a form with the student's email and uploading a pdf file of the certificate.
-- You can view all the certificates you have issued in a table.
-- You can revoke or delete any certificate you have issued by clicking on the corresponding buttons in the table.
+* You can create certificates by filling out a form with the student's email and uploading a pdf file of the certificate.
+    
+* You can view all the certificates you have issued in a list.
+    
+* You can revoke or delete any certificate you have issued by clicking on the corresponding buttons in the table.
+    
 
 ### As a person
 
-- You can view all the certificates you have received in a table with their details and status (valid or revoked).
-- You can download any certificate you have received by clicking on the download button in the table.
+* You can view all the certificates you have received in a list with their details and status (valid or revoked).
+    
+* You can download any certificate you have received by clicking on the download button in the table.
+    
 
 ### As anyone
 
-- You can verify any certificate by entering its student email, org email and cert hash, in a form.
-- You can see if the certificate is valid or not based on the result of verifying its hashes on both Supabase and blockchain.
+* You can verify any certificate by entering its student email, organization email, and certificate hash.
+    
+* You can see if the certificate is valid or not based on the result of verifying its hashes using blockchain technology.
+    
 
 ## License
 
@@ -104,5 +142,7 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 ## Contributors
 
 This project was created by:
-- Aryan Saraf
-- Rijuth Menon
+
+* Aryan Saraf - [GitHub](https://github.com/aryansarafdev) | [Twitter](https://twitter.com/Gold_24_Gold?s=20) | [LinkedIn](https://www.linkedin.com/in/aryan-saraf-43791524b/)
+    
+* Rijuth Menon - [GitHub](https://github.com/MarkisDev) | [Twitter](https://twitter.com/markisdev) | [LinkedIn](https://linkedin.com/in/rijuthmenon)

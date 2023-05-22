@@ -28,7 +28,7 @@ The application has 2 main components: Organization and Person.
     
 * The transaction hash will make it possible for anyone to verify the authenticity manually by entering the hash into a website such as [https://getblock.io](https://getblock.io) (blockchain explorers).
     
-    #### Certificate Verification
+#### Certificate Verification
     
 * Each certificate detail stored on the blockchain has an additional boolean variable called `isRevoked` associated with it.
     
@@ -38,9 +38,7 @@ The application has 2 main components: Organization and Person.
     
 * In the certificate verification screen, the user has to enter all the student email, and organization email and upload the original PDF.
     
-* We recompute the hashes and use the smart contract to check
-    
-    if such a certificate is stored and if it is not revoked. If all these conditions match, we return true, indicating the certificate is valid.
+* We recompute the hashes and use the smart contract to check f such a certificate is stored and if it is not revoked. If all these conditions match, we return true, indicating the certificate is valid.
     
 * For every valid certificate, we will also show the corresponding transaction hash so a user can manually verify using blockchain explorers.
     
@@ -133,7 +131,14 @@ To use this app as an organizer or a person, you need to sign up with your email
 * You can verify any certificate by entering its student email, organization email, and certificate hash.
     
 * You can see if the certificate is valid or not based on the result of verifying its hashes using blockchain technology.
-    
+
+
+## App Screenshots
+
+
+## Video Demonstration
+
+
 
 ## License
 

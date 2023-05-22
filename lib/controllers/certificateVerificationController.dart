@@ -1,8 +1,10 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:web3dart/web3dart.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:web_socket_channel/io.dart';
+
 
 class CertificateVerificationController {
   BigInt cid = BigInt.one;
@@ -18,9 +20,8 @@ class CertificateVerificationController {
   late ContractFunction _verifyCertificate;
   late ContractFunction _getCertificates;
   late ContractFunction _owner;
+  var _privatekey = dotenv.env['PRIVATE_KEY'];
 
-  final String _privatekey =
-      '0x3018fdb9769dca5fe2c60fc041f6cacc64deaf4acb5ecbcfd95681f5e17b0f4c';
 
   CertificateVerificationController() {}
 
@@ -53,7 +54,7 @@ class CertificateVerificationController {
   }
 
   Future<void> getCredentials() async {
-    _creds = EthPrivateKey.fromHex(_privatekey);
+    _creds = EthPrivateKey.fromHex(_privatekey!);
   }
 
   Future<void> getDeployedContract() async {

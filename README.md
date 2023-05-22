@@ -34,13 +34,14 @@ To install and run this project locally, you need to have Truffle, Ganache, Node
 2. Navigate to the project folder.
 3. Install dependencies: `npm install`
 4. Start Ganache and create a workspace with your project folder and add `lib/contracts/truffle-config.js` in workspace.
-5. Copy your contract address from Ganache and paste it in `lib/controllers/certificateVerificationController.dart`: String _privatekey = '*Here*'
-6. Create a Supabase project and copy your API URL and public key from Settings > API and paste them in `lib/main`: await Supabase.initialize(url:'*Here*', anonKey:'*Here*');
+5. Create .env file.
+6. Copy your contract address from Ganache and paste it in .env: PRIVATE_KEY = "*Here*"
+7. Create a Supabase project and copy your API URL and public key from Settings > API and paste it in .env: SUPABASE_URL = "*Here*" & SUPABASE_KEY = "*Here*" .
 
-7. Create table named `everyone` in Supabase with the following columns: `id`, `username`,`created_at`, `isorg`,`iper`, `uid`, `oid`, `email`.
-8. Create table named `organization` in Supabase with the following columns: `id`, `filename`,`created_at`, `certname`, `certificate`, `hashval`, `transhash`, `orgemail`,`orgname`,`uid`, `oid`, `email`.
-9. Compile and deploy the smart contract by opening terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
-10. Run the app on your emulator and enjoy!
+8. Create table named `everyone` in Supabase with the following columns: `id`, `username`,`created_at`, `isorg`,`iper`, `uid`, `oid`, `email`.
+9. Create table named `organization` in Supabase with the following columns: `id`, `filename`,`created_at`, `certname`, `certificate`, `hashval`, `transhash`, `orgemail`,`orgname`,`uid`, `oid`, `email`.
+10. Compile and deploy the smart contract by opening terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
+11. Run the app on your emulator and enjoy!
 ## Schemas for table
 # everyone:
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -6,14 +7,17 @@ import 'package:supaverify/screens/login_S.dart';
 import 'package:supaverify/screens/navigate.dart';
 import 'package:supaverify/utils/constants.dart';
 
-void main() async {
+Future main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  var url = dotenv.env['SUPABASE_URL'];
+  var key = dotenv.env['SUPABASE_KEY'];
   //Initialize Supabase
   await Supabase.initialize(
-      url: 'https://wbluqmcdevbqplwlbrop.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndibHVxbWNkZXZicXBsd2xicm9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNjE5MDcsImV4cCI6MTk5OTgzNzkwN30.EefiPxirGVClK5XXtl6rajGaRza8AKfyGY9smjYdP2E');
-  runApp(const MyApp());
+      url: url!,
+      anonKey:key!);
+           runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

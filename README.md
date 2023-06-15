@@ -133,7 +133,7 @@ To install and run this project locally, you need to have Flutter, Truffle, Gana
       ) tablespace pg_default;
     ```
     
-9. Compile and deploy the smart contract by opening the terminal at `lib/contracts` : `truffle compile` and `truffle migrate`
+9. Compile and deploy the smart contract by opening the terminal at `lib/contracts` : `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` , `truffle compile` and `truffle migrate`
     
 10. Run the app on your emulator and enjoy!
     
